@@ -7,7 +7,7 @@ CREATE TABLE (
     phone VARCHAR(20)
 );
 
--- Konsult
+-- Konsultföretag
 
 CREATE TABLE consultant_company (
     company_id SERIAL PRIMARY KEY,
@@ -35,3 +35,21 @@ CREATE TABLE person_details (
 );
 
 -- Program
+CREATE TABLE program (
+    program_id SERIAL PRIMARY KEY,
+    program_name VARCHAR(100) NOT NULL,
+    program_code VARCHAR(10) NOT NULL UNIQUE,
+    total_credits INTEGER NOT NULL
+);
+
+-- KURS
+CREATE TABLE course (
+    course_id SERIAL PRIMARY KEY,
+    course_name VARCHAR(200) NOT NULL,
+    course_code VARCHAR(20) NOT NULL UNIQUE,
+    credits INTEGER NOT NULL,
+    description TEXT,
+    is_standalone BOOLEAN DEFAULT FALSE
+);
+
+-- Utbildningsledare
