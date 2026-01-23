@@ -53,3 +53,54 @@ CREATE TABLE course (
 );
 
 -- Utbildningsledare
+CREATE TABLE education_leader (
+    leader_id INTEGER PRIMARY KEY REFERENCES person(person_id) ON DELETE CASCADE,
+    employee_number VARCHAR(25) UNIQUE NOT NULL
+);
+
+-- Klass
+CREATE TABLE class (
+    class_id SERIAL PRIMARY KEY,
+    program_id INTEGER NOT NULL REFERENCES program(program_id),
+    leader_id INTEGER NOT NULL REFERENCES education_leader(leader_id),
+    facility_id INTEGER NOT NULL REFERENCES facility(facility_id),
+    iteration INTEGER NOT NULL (iteration BETWEEN 1 AND 10),
+    start_date DATE,
+    end_date DATE,
+    UNIQUE (program_id, iteration)
+);
+
+-- Student
+CREATE TABLE student (
+    student_id INTEGER PRIMARY KEY REFERENCES person(person_id) ON DELETE CASCADE,
+    program_id INTEGER NOT NULL REFERENCES program(program_id),
+    class_id INTEGER NOT NULL REFERENCES class(class_id),
+    student_number VARCHAR(30) UNIQUE NOT NULL
+);
+
+-- Pedagog
+CREATE TABLE educator (
+    educator_id INTEGER PRIMARY KEY REFERENCES person(person_id) ON DELETE CASCADE,
+    is_permanent BOOLEAN DEFAULT FALSE,
+    employee_number VARCHAR(25) UNIQUE NOT NULL
+);
+
+-- Konsult
+CREATE TABLE consultant (
+    consultant_id INTEGER PRIMARY KEY REFERENCES person(person_id) ON DELETE CASCADE,
+    company_id INTEGER NOT NULL REFERENCES consultant_company(company_id),
+    hourly_rate NUMERIC(10,2) NOT NULL
+);
+
+-- Program Kurs
+CREATE TABLE program_course (
+    program_id INTEGER REFERENCES program(program_id) ON DELETE CASCADE,
+    course_id INTEGER REFERENCES course(course_id) ON DELETE CASCADE,
+    is_mandatory BOOLEAN DEFAULT TRUE,
+    PRIMARY KEY (program_id, course_id)
+);
+
+-- Kurs Uppgift
+CREATE TABLE course_assignment (
+    assignment_id SERIAL PRIMARY KEY,
+    
