@@ -1,5 +1,4 @@
 -- YrkesCo
-
 CREATE TABLE (
     facility_id SERIAL PRIMARY KEY,
     city VARCHAR(100) NOT NULL,
@@ -8,7 +7,6 @@ CREATE TABLE (
 );
 
 -- Konsultföretag
-
 CREATE TABLE consultant_company (
     company_id SERIAL PRIMARY KEY,
     company_name VARCHAR(200) NOT NULL,
