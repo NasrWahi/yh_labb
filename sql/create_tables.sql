@@ -103,4 +103,24 @@ CREATE TABLE program_course (
 -- Kurs Uppgift
 CREATE TABLE course_assignment (
     assignment_id SERIAL PRIMARY KEY,
-    
+    course_id INTEGER NOT NULL REFERENCES course(course_id),
+    educator_id INTEGER NOT NULL REFERENCES course(course_id),
+    class_id INTEGER NOT NULL REFERENCES class(class_id),
+    UNIQUE (course_id, class_id)
+);
+
+-- Studentinskrivning
+CREATE TABLE student_enrollment (
+    enrollment_id SERIAL PRIMARY KEY,
+    student_id INTEGER NOT
+     NULL REFERENCES student(student_id) ON DELETE CASCADE,
+    assignment_id INTEGER NOT NULL REFERENCES course_assignment(assignment_id) ON DELETE CASCADE,
+    enrollment_date DATE DEFAULT CURRENT_DATE,
+    UNIQUE (student_id, assignment_id)
+);
+
+-- Index
+CREATE INDEX idx_person_type ON person(person_type);
+CREATE INDEX idx_student_class ON student(class_id);
+CREATE INDEX idx_class_program ON class(program_id);
+CREATE INDEX idx_course_assignment_class ON course_assignment(class_id);
