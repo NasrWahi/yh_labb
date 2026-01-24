@@ -1,8 +1,10 @@
 -- YrkesCo
 CREATE TABLE (
     facility_id SERIAL PRIMARY KEY,
+    facility_code VARCHAR(15) UNIQUE NOT NULL,
     city VARCHAR(100) NOT NULL,
     address VARCHAR(300) NOT NULL,
+    postal_code VARCHAR(10),
     phone VARCHAR(20)
 );
 
@@ -62,9 +64,11 @@ CREATE TABLE class (
     program_id INTEGER NOT NULL REFERENCES program(program_id),
     leader_id INTEGER NOT NULL REFERENCES education_leader(leader_id),
     facility_id INTEGER NOT NULL REFERENCES facility(facility_id),
+    class_name VARCHAR(50) NOT NULL,
     iteration INTEGER NOT NULL (iteration BETWEEN 1 AND 10),
     start_date DATE,
     end_date DATE,
+    status VARCHAR(20) DEFAULT 'planned',
     UNIQUE (program_id, iteration)
 );
 
