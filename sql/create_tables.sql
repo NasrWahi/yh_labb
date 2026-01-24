@@ -1,4 +1,4 @@
--- YrkesCo
+-- YrkesCo (Anläggningar)
 CREATE TABLE facility_id (
     facility_id SERIAL PRIMARY KEY,
     facility_code VARCHAR(15) UNIQUE NOT NULL,
