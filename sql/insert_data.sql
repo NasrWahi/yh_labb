@@ -58,13 +58,29 @@ INSERT INTO person (first_name, last_name, person_type, birth_date) VALUES
 ('Emelie', 'Nilsson', 'student', '1997-10-23'),
 ('Oscar', 'Göransson', 'student', '1999-02-14'),
 ('Maja', 'Lundqvist', 'student', '2000-06-30'),
-('Hanna', 'Karlsson', 'student', '2001-04-18'),
+('Hanna', 'Karlsson', 'student', '1999-04-18'),
 ('Elias', 'Jabbari', 'student', '1998-11-11'),
-
-
-
-
-
+('Alma', 'Svensson', 'student', '2004-09-09'),
+('Viktor', 'Holm', 'student', '1996-08-08'),
+('Sara', 'Olofsson', 'student', '1995-05-05'),
+('Alejandro', 'Papadopoulos', 'student', '1996-08-15'),
+('Linnea', 'Berg', 'student', '1999-02-28'),
+('Felix', 'Nyström', 'student', '1991-12-04'),
+('Elin', 'Forsberg', 'student', '1992-03-03'),
+('Adam', 'Nordström', 'student', '2002-04-04'),
+('Wilma', 'Hansson', 'student', '2001-01-04'),
+('Mohammed', 'Said', 'student', '1999-01-10'),
+('Asia', 'Ahmeddin', 'student', '2001-09-21'),
+('Leo', 'Gustafsson', 'student', '1994-08-11'),
+('Thomas', 'Sankara', 'student', '1998-08-08'),
+('Berhan', 'Mustafa', 'student', '1997-05-03'),
+('Cecilia', 'Larsson', 'student', '2003-12-10'),
+('Musa', 'Habib', 'student', '1999-06-04'),
+('Jasmine', 'Zhao', 'student', '2005-02-05'),
+('Lisa', 'Dahl', 'student', '2000-03-03'),
+('Erik', 'Andersson', 'student', '1987-07-08'),
+('Arda', 'Yilmaz', 'student', '1995-09-05'),
+('Kenneth', 'Cornelius', 'student', '1986-10-10');
 
 -- Program
 INSERT INTO program (program_name, program_code, total_credits, duration_weeks, description, is_active) VALUES
@@ -75,4 +91,5 @@ INSERT INTO program (program_name, program_code, total_credits, duration_weeks, 
 ('Cybersäkerhet', 'YHP-CY01', 400, 40, 'Säkerhetsprinciper och tekniker inom IT.', TRUE);
 
 -- Kurser (Samt fristående kurser)
-INSERT INTO course (course_name, course_code, credits, description, is_standalone, d
+INSERT INTO course (course_name, course_code, credits, description, is_standalone, difficulty_level, is_active) VALUES
+-- Programkurser

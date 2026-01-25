@@ -93,7 +93,7 @@ CREATE TABLE student (
     status VARCHAR(20) DEFAULT 'active'
 );
 
--- Pedagog
+-- Utbildare - Lärare - Pedagog
 CREATE TABLE educator (
     educator_id INTEGER PRIMARY KEY REFERENCES person(person_id) ON DELETE CASCADE,
     is_permanent BOOLEAN DEFAULT FALSE,
