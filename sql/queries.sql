@@ -85,7 +85,7 @@ GROUP BY e.educator_id, per.first_name, per.last_name,
          e.employee_number, e.is_permanent, e.hourly_rate
 ORDER BY antal_kursuppdrag DESC, lärare_namn;
 
--- 5. KONSULTER: FÖRETAG OCH ARVODE
+-- KONSULTER: FÖRETAG OCH ARVODE
 SELECT 
     CONCAT(per.first_name, ' ', per.last_name) as konsult_namn,
     cc.company_name,
@@ -98,3 +98,51 @@ FROM consultant c
 JOIN person per ON c.consultant_id = per.person_id
 JOIN consultant_company cc ON c.company_id = cc.company_id
 ORDER BY c.hourly_rate DESC;
+
+-- Fristående kurser
+SELECT 
+    co.course_code,
+    co.course_name,
+    co.credits,
+    co.description,
+    cl.class_name,
+    CONCAT(per.first_name, ' ', per.last_name) as lärare_namn,
+    ca.start_date,
+    ca.end_date,
+    f.facility_name,
+    f.city
+FROM course co
+JOIN course_assignment ca ON co.course_id = ca.course_id
+JOIN class cl ON ca.class_id = cl.class_id
+JOIN educator e ON ca.educator_id = e.educator_id
+JOIN person per ON e.educator_id = per.person_id
+JOIN facility f ON cl.facility_id = f.facility_id
+WHERE co.is_standalone = TRUE
+ORDER BY ca.start_date;
+
+-- Program: Kurser och Vad/Om de är obligatoriska
+SELECT 
+    p.program_name,
+    p.program_code,
+    co.course_name,
+    co.course_code,
+    co.credits,
+    CASE 
+        WHEN pc.is_mandatory THEN 'Obligatorisk'
+        ELSE 'Valfri'
+    END as kurs_typ,
+    pc.semester as termin
+FROM program p
+JOIN program_course pc ON p.program_id = pc.program_id
+JOIN course co ON pc.course_id = co.course_id
+ORDER BY p.program_name, pc.semester, kurs_typ DESC;
+
+-- Statistik: Antal studenter och städer
+SELECT 
+    p.program_name,
+    f.city,
+    cl.iteration as omgång,
+    cl.status,
+    COUNT(s.student_id) as antal_studenter,
+    cl.max_students as max_antal,
+    ROUND((COUNT(s.student_id) * 100.0 / cl.max_students), 1) as fyllnadsgrad
