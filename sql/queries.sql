@@ -146,3 +146,48 @@ SELECT
     COUNT(s.student_id) as antal_studenter,
     cl.max_students as max_antal,
     ROUND((COUNT(s.student_id) * 100.0 / cl.max_students), 1) as fyllnadsgrad
+FROM program p
+JOIN class cl ON p.program_id = cl.program_id
+JOIN facility f ON cl.facility_id = f.facility_id
+LEFT JOIN student s ON cl.class_id = s.class_id
+GROUP BY p.program_name, f.city, cl.iteration, cl.status, cl.max_students
+ORDER BY p.program_name, f.city, cl.iteration;
+
+-- Utbildningsledare och deras klasser
+SELECT 
+    CONCAT(per.first_name, ' ', per.last_name) as ledare_namn,
+    el.employee_number,
+    el.department,
+    COUNT(cl.class_id) as antal_klasser,
+    STRING_AGG(CONCAT(cl.class_name, ' (', cl.status, ')'), ', ') as ledda_klasser,
+    CASE 
+        WHEN COUNT(cl.class_id) > 3 THEN 'ÖVER MAXGRÄNS!'
+        ELSE 'OK'
+    END as kontroll
+FROM education_leader el
+JOIN person per ON el.leader_id = per.person_id
+LEFT JOIN class cl ON el.leader_id = cl.leader_id
+GROUP BY el.leader_id, per.first_name, per.last_name, 
+         el.employee_number, el.department
+HAVING COUNT(cl.class_id) > 0  -- Enbart ledare med klasser!!!
+ORDER BY antal_klasser DESC;
+
+-- Registrering av studenter och betyg
+SELECT 
+    s.student_number,
+    CONCAT(per.first_name, ' ', per.last_name) as student_namn,
+    co.course_name,
+    cl.class_name,
+    se.enrollment_date,
+    se.grade,
+    se.status as kurs_status,
+    CONCAT(edu_per.first_name, ' ', edu_per.last_name) as lärare_namn
+FROM student_enrollment se
+JOIN student s ON se.student_id = s.student_id
+JOIN person per ON s.student_id = per.person_id
+JOIN course_assignment ca ON se.assignment_id = ca.assignment_id
+JOIN course co ON ca.course_id = co.course_id
+JOIN class cl ON ca.class_id = cl.class_id
+JOIN educator e ON ca.educator_id = e.educator_id
+JOIN person edu_per ON e.educator_id = edu_per.person_id
+ORDER BY per.last_name, co.course_name;
