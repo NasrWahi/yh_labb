@@ -4,12 +4,12 @@
 
 -- Anläggningar
 INSERT INTO facility (facility_code, facility_name, address, postal_code, phone) VALUES
-('GBG01', 'YrkesCo Göteborg (Central)', 'Göteborg', 'Götaplatsen 5', '41256', '031-123456'),
-('GBG02', 'YrkesCo Göteborg Avenyn', 'Göteborg', 'Avenyn 42', '41136', '031-234567'),
-('STO01', 'YrkesCo Stockholm Kungsgatan', 'Stockholm', 'Kungsgatan 64', '11122', '08-987654'),
-('STO02', 'YrkesCo Stockholm Sveavägen', 'Stockholm', 'Sveavägen 73', '11350', '08-876543'),
-('MAL01', 'YrkesCo Malmö (Central)', 'Malmö', 'Stortorget 1', '21141', '040-222444'),
-('UPP01', 'YrkesCo Uppsala Stad', 'Uppsala', 'Stora Torget 10', '75320', '018-999888');
+('GBG01', 'YrkesCo Göteborg (Central)', 'Götaplatsen 5', '41256', '031-123456'),
+('GBG02', 'YrkesCo Göteborg Avenyn', 'Avenyn 42', '41136', '031-234567'),
+('STO01', 'YrkesCo Stockholm Kungsgatan', 'Kungsgatan 64', '11122', '08-987654'),
+('STO02', 'YrkesCo Stockholm Sveavägen', 'Sveavägen 73', '11350', '08-876543'),
+('MAL01', 'YrkesCo Malmö (Central)', 'Stortorget 1', '21141', '040-222444'),
+('UPP01', 'YrkesCo Uppsala Stad', 'Stora Torget 10', '75320', '018-999888');
 
 -- Konsultföretag
 INSERT INTO consultant_company (company_name, org_number, has_f_skatt, address, email, phone) VALUES
@@ -133,9 +133,9 @@ INSERT INTO person_details (person_id, personal_number, email) VALUES
 (46, '031210-6789', 'cecilia.larsson@yrkesco.se'),
 (47, '990604-7890', 'musa.habib@yrkesco.se'),
 (48, '050205-8901', 'jasmine.zhao@yrkesco.se'),
-(49, '000303-9012', 'lina.ahmed@yrkesco.se'),
+(49, '000303-9012', 'lisa.dahl@yrkesco.se'),
 (50, '870708-0123', 'erik.andersson@yrkesco.se'),
-(51, '950905-2345', 'anna.karlsson@yrkesco.se'),
+(51, '950905-2345', 'arda.yilmaz@yrkesco.se'),
 (52, '861010-3456', 'kenneth.cornelius@yrkesco.se');
 
 -- Program
@@ -195,6 +195,7 @@ INSERT INTO class (program_id, leader_id, facility_id, class_name, class_code, i
 -- Student
 INSERT INTO student (student_id, program_id, class_id, student_number, enrollment_date, status) VALUES
 -- Klass 1
+(25, 1, 1, 'ST-2024-000', '2024-01-10', 'active'),
 (26, 1, 1, 'ST-2024-001', '2024-01-10', 'active'),
 (27, 1, 1, 'ST-2024-002', '2024-01-10', 'active'),
 (28, 1, 1, 'ST-2024-003', '2024-01-10', 'active'),
@@ -251,19 +252,94 @@ INSERT INTO educator (educator_id, is_permanent, employee_number, employment_dat
 (13, TRUE, 'ED-PERM-008', '2021-06-05', 520.00),
 
 -- Ej fasta (konsulter/visstidsanställda)
-(12, FALSE, 'ED-CONS-001', NULL, 650.00),
-(13, FALSE, 'ED-CONS-002', NULL, 620.00),
-(14, FALSE, 'ED-CONS-003', NULL, 640.00),
-(15, FALSE, 'ED-CONS-004', NULL, 630.00),
-(16, FALSE, 'ED-CONS-005', NULL, 660.00);
+(14, FALSE, 'ED-CONS-001', NULL, 650.00),
+(15, FALSE, 'ED-CONS-002', NULL, 620.00),
+(16, FALSE, 'ED-CONS-003', NULL, 640.00),
+(17, FALSE, 'ED-CONS-004', NULL, 630.00),
+(18, FALSE, 'ED-CONS-005', NULL, 660.00);
 
 -- Konsulter
 INSERT INTO consultant (consultant_id, company_id, hourly_rate, contract_start_date, contract_end_date) VALUES
-(17, 1, 700.00, '2024-01-01', '2024-12-31'),
-(18, 2, 720.00, '2024-02-01', '2024-11-30'),
-(19, 3, 680.00, '2024-03-01', '2024-10-31'),
-(20, 4, 710.00, '2024-04-01', '2024-09-30'),
-(21, 1, 690.00, '2024-05-01', '2024-08-31'),
-(22, 2, 730.00, '2024-06-01', '2024-07-31');
+(19, 1, 700.00, '2024-01-01', '2024-12-31'),
+(20, 2, 720.00, '2024-02-01', '2024-11-30'),
+(21, 3, 680.00, '2024-03-01', '2024-10-31'),
+(22, 4, 710.00, '2024-04-01', '2024-09-30'),
+(23, 1, 690.00, '2024-05-01', '2024-08-31'),
+(24, 2, 730.00, '2024-06-01', '2024-07-31');
 
 -- Program Kurs
+INSERT INTO program_course (program_id, course_id, is_mandatory, semester) VALUES
+-- Fullstack Utvecklare .NET
+(1, 1, TRUE, 1),
+(1, 2, TRUE, 2),
+(1, 3, FALSE, 3),
+
+-- Data Science & AI
+(2, 4, TRUE, 1),
+(2, 5, TRUE, 2),
+(2, 6, TRUE, 3),
+
+-- UX/UI Design
+(3, 1, FALSE, 1),
+(3, 7, TRUE, 2),
+
+-- Cloud Engineer
+(4, 6, TRUE, 1),
+(4, 2, TRUE, 1),
+(4, 3, FALSE, 2),
+
+-- Cybersäkerhet
+(5, 2, TRUE, 1),
+(5, 9, TRUE, 2),
+(5, 8, FALSE, 3);
+
+-- Kurs Uppgift
+INSERT INTO course_assignment (course_id, educator_id, class_id, start_date, end_date) VALUES
+-- Klass 1
+(1, 6, 1, '2024-01-15', '2024-03-15'),
+(2, 13, 1, '2024-03-16', '2024-06-15'),
+
+-- Klass 2
+(1, 7, 2, '2024-08-20', '2024-10-20'),
+(3, 14, 2, '2024-10-21', '2024-12-20'),
+
+-- Klass 3
+(4, 15, 3, '2024-02-01', '2024-04-01'),
+(5, 8, 3, '2024-04-02', '2024-07-01'),
+
+-- Klass 5
+(1, 9, 5, '2024-08-25', '2024-10-25'),
+(2, 16, 5, '2024-10-26', '2024-12-25'),
+
+-- Klass 6
+(6, 10, 6, '2024-02-15', '2024-04-15'),
+(2, 17, 6, '2024-04-16', '2024-07-15'),
+
+-- Klass 9
+(1, 11, 9, '2024-08-20', '2024-10-20'),
+(3, 18, 9, '2024-10-21', '2024-12-20'),
+
+-- Fristående kurser
+(8, 12, 1, '2024-05-01', '2024-05-31'),
+(9, 14, 3, '2024-06-01', '2024-06-30'),
+(7, 15, 2, '2024-09-01', '2024-09-30'),
+(10, 16, 5, '2024-10-01', '2024-10-15');
+
+-- Studentinskrivning
+INSERT INTO student_enrollment (student_id, assignment_id, enrollment_date, grade, status) VALUES
+-- Fatima Ali i klass 1
+(25, 1, '2024-01-12', NULL, 'enrolled'),
+(25, 2, '2024-03-16', NULL, 'enrolled'),
+-- Noah Sundström i klass 1
+(26, 1, '2024-01-13', NULL, 'enrolled'),
+(26, 2, '2024-03-16', NULL, 'enrolled'),
+-- Emelie Nilsson i klass 3
+(27, 5, '2024-02-05', NULL, 'enrolled'),
+(27, 6, '2024-04-03', NULL, 'enrolled'),
+-- Musa Habib i klass 5
+(47, 7, '2024-08-26', NULL, 'enrolled'),
+(47, 8, '2024-10-26', NULL, 'enrolled'),
+-- Jasmine Zhao i klass 6
+(48, 9, '2024-02-18', NULL, 'enrolled'),
+(48, 10, '2024-04-17', NULL, 'enrolled');
+-- Lägg till fler inskrivningar efter behov
