@@ -149,3 +149,121 @@ INSERT INTO program (program_name, program_code, total_credits, duration_weeks, 
 -- Kurser (Samt fristående kurser)
 INSERT INTO course (course_name, course_code, credits, description, is_standalone, difficulty_level, is_active) VALUES
 -- Programkurser
+('Javascript Grundkurs', 'YHC-JS01', 40, 'Introduktion till JavaScript och webbutveckling.', FALSE, 'beginner', TRUE),
+('Databashantering med SQL', 'YHC-DB01', 40, 'Lär dig grunderna i databashantering och SQL.', FALSE, 'beginner', TRUE),
+('React Avancerad', 'YHC-RE01', 40, 'Avancerade koncept inom React, med fokus på prestanda och skalbarhet.', FALSE, 'intermediate', TRUE),
+('Python för Data Science', 'YHC-PY01', 40, 'Python, Numpy, Pandas för dataanalys och visualisering.', FALSE, 'beginner', TRUE),
+('Maskininlärning Grundkurs', 'YHC-ML01', 40, 'Introduktion till maskininlärning och dess tillämpningar.', FALSE, 'beginner', TRUE),
+('Cloud Computing Azure', 'YHC-AZ01', 40, 'Lär dig grunderna i Microsoft Azure och molntjänster.', FALSE, 'beginner', TRUE),
+
+-- Fristående kurser
+('Projektledning IT', 'YHC-PL01', 20, 'Grundläggande principer för projektledning inom IT.', TRUE, 'beginner', TRUE),
+('Testautomatisering', 'YHC-TA01', 20, 'Introduktion till testautomatisering och verktyg.', TRUE, 'intermediate', TRUE),
+('GDPR och Dataskydd', 'YHC-GD01', 20, 'Dataskyddslagar och GDPR inom IT-branschen.', TRUE, 'beginner', TRUE),
+('Presentationsteknik för IT', 'YHC-PT01', 10, 'Effektiva presentationsfärdigheter för IT-professionella.', TRUE, 'beginner', TRUE);
+
+-- Utbildningsledare
+INSERT INTO education_leader (leader_id, employee_number, department) VALUES
+(1, 'EL-2023-001', 'IT Utbildningar'),
+(2, 'EL-2023-002', 'Data Science'),
+(3, 'EL-2023-003', 'Design och UX'),
+(4, 'EL-2024-001', 'Cloud Engineer'),
+(5, 'EL-2024-002', 'Cybersäkerhet');
+
+-- Klass
+INSERT INTO class (program_id, leader_id, facility_id, class_name, class_code, iteration, start_date, end_date, max_students, status) VALUES
+-- Göteborg
+(1, 1, 1, 'Fullstack .NET vår 2024', 'FSD-GBG-2024-1', 1, '2024-01-15', '2024-06-15', 25, 'ongoing'),
+(1, 1, 2, 'Fullstack .NET höst 2024', 'FSD-GBG-2024-2', 2, '2024-08-20', '2024-12-20', 25, 'planned'),
+(2, 2, 1, 'Data Science vår 2024', 'DS-GBG-2024-1', 1, '2024-02-01', '2024-07-01', 20, 'ongoing'),
+(3, 3, 2, 'UX/UI Design vår 2024', 'UX-GBG-2024-1', 1, '2024-03-01', '2024-07-30', 19, 'ongoing'),
+
+-- Stockholm
+(1, 4, 3, 'Fullstack .NET vår 2024', 'FSD-STO-2024-1', 1, '2024-01-20', '2024-06-20', 30, 'ongoing'),
+(4, 4, 4, 'Cloud Engineer vår 2024', 'CL-STO-2024-1', 1, '2024-02-15', '2024-07-15', 22, 'ongoing'),
+(5, 5, 3, 'Cybersäkerhet vår 2024', 'CY-STO-2024-1', 1, '2024-03-10', '2024-08-10', 20, 'ongoing'),
+(2, 5, 4, 'Data Science höst 2024', 'DS-STO-2024-2', 2, '2024-09-01', '2024-12-31', 20, 'planned'),
+
+-- Malmö
+(1, 3, 5, 'Fullstack .NET höst 2024', 'FSD-MAL-2024-1', 1, '2024-08-25', '2024-12-25', 28, 'planned'),
+(3, 2, 5, 'UX/UI Design höst 2024', 'UX-MAL-2024-1', 1, '2024-09-05', '2024-12-30', 18, 'planned'),
+
+-- Uppsala
+(4, 1, 6, 'Cloud Engineer höst 2024', 'CL-UPP-2024-1', 1, '2024-08-15', '2024-12-15', 24, 'planned'),
+(5, 4, 6, 'Cybersäkerhet höst 2024', 'CY-UPP-2024-1', 1, '2024-09-10', '2024-12-20', 20, 'planned');
+
+-- Student
+INSERT INTO student (student_id, program_id, class_id, student_number, enrollment_date, status) VALUES
+-- Klass 1
+(26, 1, 1, 'ST-2024-001', '2024-01-10', 'active'),
+(27, 1, 1, 'ST-2024-002', '2024-01-10', 'active'),
+(28, 1, 1, 'ST-2024-003', '2024-01-10', 'active'),
+(29, 1, 1, 'ST-2024-004', '2024-01-10', 'active'),
+
+-- Klass 2
+(30, 1, 2, 'ST-2024-005', '2024-08-15', 'active'),
+(31, 1, 2, 'ST-2024-006', '2024-08-15', 'active'),
+(32, 1, 2, 'ST-2024-007', '2024-08-15', 'active'),
+
+-- Klass 3
+(33, 2, 3, 'ST-2024-008', '2024-01-25', 'active'),
+(34, 2, 3, 'ST-2024-009', '2024-01-25', 'active'),
+(35, 2, 3, 'ST-2024-010', '2024-01-25', 'active'),
+
+-- Klass 4
+(36, 3, 4, 'ST-2024-011', '2024-03-01', 'active'),
+(37, 3, 4, 'ST-2024-012', '2024-03-01', 'active'),
+(38, 3, 4, 'ST-2024-013', '2024-03-01', 'active');
+
+-- Klass 5
+(39, 1, 5, 'ST-2024-014', '2024-01-15', 'active'),
+(40, 1, 5, 'ST-2024-015', '2024-01-15', 'active'),
+(41, 1, 5, 'ST-2024-016', '2024-01-15', 'active'),
+
+-- Klass 6
+(42, 4, 6, 'ST-2024-017', '2024-02-20', 'active'),
+(43, 4, 6, 'ST-2024-018', '2024-02-20', 'active'),
+(44, 4, 6, 'ST-2024-019', '2024-02-20', 'active'),
+
+-- Klass 7
+(45, 5, 7, 'ST-2024-020', '2024-03-15', 'active'),
+(46, 5, 7, 'ST-2024-021', '2024-03-15', 'active'),
+(47, 5, 7, 'ST-2024-022', '2024-03-15', 'active'),
+
+-- Klass 8
+(48, 2, 8, 'ST-2024-023', '2024-09-05', 'active'),
+(49, 2, 8, 'ST-2024-024', '2024-09-05', 'active'),
+
+-- Klass 9
+(50, 1, 9, 'ST-2024-025', '2024-08-20', 'active'),
+(51, 1, 9, 'ST-2024-026', '2024-08-20', 'active');
+
+-- Utbildare
+INSERT INTO educator (educator_id, is_permanent, employee_number, employment_date, hourly_rate) VALUES
+-- Fasta anställda
+(6, TRUE, 'ED-PERM-001', '2010-05-15', 550.00),
+(7, TRUE, 'ED-PERM-002', '2005-09-01', 600.00),
+(8, TRUE, 'ED-PERM-003', '2012-11-20', 580.00),
+(9, TRUE, 'ED-PERM-004', '2015-03-10', 570.00),
+(10, TRUE, 'ED-PERM-005', '2018-07-25', 560.00),
+(11, TRUE, 'ED-PERM-006', '2019-10-30', 540.00),
+(12, TRUE, 'ED-PERM-007', '2020-01-15', 530.00),
+(13, TRUE, 'ED-PERM-008', '2021-06-05', 520.00),
+
+-- Ej fasta (konsulter/visstidsanställda)
+(12, FALSE, 'ED-CONS-001', NULL, 650.00),
+(13, FALSE, 'ED-CONS-002', NULL, 620.00),
+(14, FALSE, 'ED-CONS-003', NULL, 640.00),
+(15, FALSE, 'ED-CONS-004', NULL, 630.00),
+(16, FALSE, 'ED-CONS-005', NULL, 660.00);
+
+-- Konsulter
+INSERT INTO consultant (consultant_id, company_id, hourly_rate, contract_start_date, contract_end_date) VALUES
+(17, 1, 700.00, '2024-01-01', '2024-12-31'),
+(18, 2, 720.00, '2024-02-01', '2024-11-30'),
+(19, 3, 680.00, '2024-03-01', '2024-10-31'),
+(20, 4, 710.00, '2024-04-01', '2024-09-30'),
+(21, 1, 690.00, '2024-05-01', '2024-08-31'),
+(22, 2, 730.00, '2024-06-01', '2024-07-31');
+
+-- Program Kurs
