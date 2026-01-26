@@ -191,3 +191,92 @@ JOIN class cl ON ca.class_id = cl.class_id
 JOIN educator e ON ca.educator_id = e.educator_id
 JOIN person edu_per ON e.educator_id = edu_per.person_id
 ORDER BY per.last_name, co.course_name;
+
+-- Känslig data (Personuppgifter separerade)
+SELECT 
+    p.person_id,
+    CONCAT(p.first_name, ' ', p.last_name) as namn,
+    p.person_type,
+    pd.email,
+    pd.personal_number
+FROM person p
+JOIN person_details pd ON p.person_id = pd.person_id
+WHERE p.person_type = 'student'
+ORDER BY p.last_name
+LIMIT 10;  -- Begränsa för säkerhet
+
+-- Anläggningar och deras specifika klasser
+SELECT 
+    f.facility_code,
+    f.facility_name,
+    f.city,
+    f.address,
+    COUNT(DISTINCT cl.class_id) as antal_klasser,
+    STRING_AGG(DISTINCT p.program_name, ', ') as program,
+    COUNT(DISTINCT s.student_id) as totala_studenter
+FROM facility f
+LEFT JOIN class cl ON f.facility_id = cl.facility_id
+LEFT JOIN program p ON cl.program_id = p.program_id
+LEFT JOIN student s ON cl.class_id = s.class_id
+GROUP BY f.facility_id, f.facility_code, f.facility_name, 
+         f.city, f.address
+ORDER BY f.city, f.facility_name;
+
+-- Fast anställda eller konsulter/visstids
+SELECT 
+    'Fast anställda' as kategori,
+    COUNT(*) as antal,
+    ROUND(AVG(e.hourly_rate), 2) as genomsnittlig_timlön
+FROM educator e
+WHERE e.is_permanent = TRUE
+
+UNION ALL
+
+SELECT 
+    'Konsulter/visstid' as kategori,
+    COUNT(*) as antal,
+    ROUND(AVG(e.hourly_rate), 2) as genomsnittlig_timlön
+FROM educator e
+WHERE e.is_permanent = FALSE
+
+UNION ALL
+
+SELECT 
+    'Konsulter (separat)' as kategori,
+    COUNT(*) as antal,
+    ROUND(AVG(c.hourly_rate), 2) as genomsnittlig_arvode
+FROM consultant c;
+
+-- Den tänkta expansionen till andra städer/orter
+SELECT 
+    f.city,
+    COUNT(DISTINCT f.facility_id) as antal_anläggningar,
+    COUNT(DISTINCT cl.class_id) as antal_klasser,
+    COUNT(DISTINCT s.student_id) as antal_studenter,
+    STRING_AGG(DISTINCT p.program_name, ', ') as erbjudna_program
+FROM facility f
+LEFT JOIN class cl ON f.facility_id = cl.facility_id
+LEFT JOIN program p ON cl.program_id = p.program_id
+LEFT JOIN student s ON cl.class_id = s.class_id
+GROUP BY f.city
+ORDER BY antal_studenter DESC;
+
+-- Join-test för att enkelt få upp all viktig och nödvändig information om en student + exempel för redovisningssyfte
+SELECT 
+    s.student_number,
+    CONCAT(per.first_name, ' ', per.last_name) as student_namn,
+    p.program_name,
+    cl.class_name,
+    f.facility_name,
+    f.city,
+    el.employee_number as ledare_nr,
+    CONCAT(el_per.first_name, ' ', el_per.last_name) as ledare_namn
+FROM student s
+JOIN person per ON s.student_id = per.person_id
+JOIN program p ON s.program_id = p.program_id
+JOIN class cl ON s.class_id = cl.class_id
+JOIN facility f ON cl.facility_id = f.facility_id
+JOIN education_leader el ON cl.leader_id = el.leader_id
+JOIN person el_per ON el.leader_id = el_per.person_id
+WHERE s.student_id = 25  -- Fatima Ali
+LIMIT 1;
