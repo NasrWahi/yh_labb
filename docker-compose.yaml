@@ -1,0 +1,45 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: yrkesco-postgres
+    environment:
+    restart: always
+      POSTGRES_DB: yrkesco_db
+      POSTGRES_USER: yrkesco_user
+      POSTGRES_PASSWORD: yrkesco_password
+    ports:
+      - "5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d  #  Automatiskt | SQL-filer
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U yrkesco_user -d yrkesco_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - yrkesco-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: yrkesco-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@yrkesco.se
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - yrkesco-network
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+networks:
+  yrkesco-network:
+    driver: bridge
