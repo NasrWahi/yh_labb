@@ -11,7 +11,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./docs/sql:/docker-entrypoint-initdb.d
+      - ./sql:/docker-entrypoint-initdb.d
     healthcheck: # "unhealthy" FIXAD
       test: ["CMD-SHELL", "pg_isready -U yrkesco_user -d yrkesco_db"]
       interval: 5s
