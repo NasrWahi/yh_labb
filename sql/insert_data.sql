@@ -237,7 +237,10 @@ INSERT INTO student (student_id, program_id, class_id, student_number, enrollmen
 
 -- Klass 9
 (50, 1, 9, 'ST-2024-025', '2024-08-20', 'active'),
-(51, 1, 9, 'ST-2024-026', '2024-08-20', 'active');
+(51, 1, 9, 'ST-2024-026', '2024-08-20', 'active'),
+
+-- Klass 10
+(52, 3, 10, 'ST-2024-027', '2024-08-25', 'active');
 
 -- Utbildare
 INSERT INTO educator (educator_id, is_permanent, employee_number, employment_date, hourly_rate) VALUES
@@ -295,51 +298,155 @@ INSERT INTO program_course (program_id, course_id, is_mandatory, semester) VALUE
 
 -- Kurs Uppgift
 INSERT INTO course_assignment (course_id, educator_id, class_id, start_date, end_date) VALUES
--- Klass 1
+-- Klass 1 (FSD-GBG-2024-1)
 (1, 6, 1, '2024-01-15', '2024-03-15'),
 (2, 13, 1, '2024-03-16', '2024-06-15'),
 
--- Klass 2
+-- Klass 2 (FSD-GBG-2024-2)
 (1, 7, 2, '2024-08-20', '2024-10-20'),
 (3, 14, 2, '2024-10-21', '2024-12-20'),
 
--- Klass 3
+-- Klass 3 (DS-GBG-2024-1)
 (4, 15, 3, '2024-02-01', '2024-04-01'),
 (5, 8, 3, '2024-04-02', '2024-07-01'),
 
--- Klass 5
+-- Klass 4 (UX-GBG-2024-1)
+(1, 9, 4, '2024-03-01', '2024-04-30'),
+(7, 10, 4, '2024-05-01', '2024-07-30'),
+
+-- Klass 5 (FSD-STO-2024-1)
 (1, 9, 5, '2024-08-25', '2024-10-25'),
 (2, 16, 5, '2024-10-26', '2024-12-25'),
 
--- Klass 6
+-- Klass 6 (CL-STO-2024-1)
 (6, 10, 6, '2024-02-15', '2024-04-15'),
 (2, 17, 6, '2024-04-16', '2024-07-15'),
 
--- Klass 9
-(1, 11, 9, '2024-08-20', '2024-10-20'),
-(3, 18, 9, '2024-10-21', '2024-12-20'),
+-- Klass 7 (CY-STO-2024-1)
+(2, 11, 7, '2024-03-10', '2024-05-10'),
+(9, 12, 7, '2024-05-11', '2024-08-10'),
+
+-- Klass 8 (DS-STO-2024-2)
+(4, 15, 8, '2024-09-01', '2024-10-31'),
+(5, 8, 8, '2024-11-01', '2024-12-31'),
+
+-- Klass 9 (FSD-MAL-2024-1)
+(1, 11, 9, '2024-08-25', '2024-10-25'),
+(3, 18, 9, '2024-10-26', '2024-12-25'),
+
+-- Klass 10 (UX-MAL-2024-1)
+(1, 9, 10, '2024-09-05', '2024-10-05'),
+(7, 10, 10, '2024-10-06', '2024-12-30'),
+
+-- Klass 11 (CL-UPP-2024-1)
+(6, 10, 11, '2024-08-15', '2024-10-15'),
+(2, 17, 11, '2024-10-16', '2024-12-15'),
+
+-- Klass 12 (CY-UPP-2024-1)
+(2, 11, 12, '2024-09-10', '2024-11-10'),
+(9, 12, 12, '2024-11-11', '2024-12-20'),
 
 -- Fristående kurser
-(8, 12, 1, '2024-05-01', '2024-05-31'),
-(9, 14, 3, '2024-06-01', '2024-06-30'),
-(7, 15, 2, '2024-09-01', '2024-09-30'),
-(10, 16, 5, '2024-10-01', '2024-10-15');
+(8, 12, 1, '2024-05-01', '2024-05-31'),  -- Testautomatisering i klass 1
+(9, 14, 3, '2024-06-01', '2024-06-30'),  -- GDPR i klass 3
+(7, 15, 2, '2024-09-01', '2024-09-30'),  -- Projektledning i klass 2
+(10, 16, 5, '2024-10-01', '2024-10-15'); -- Presentationsteknik i klass 5
 
 -- Studentinskrivning
 INSERT INTO student_enrollment (student_id, assignment_id, enrollment_date, grade, status) VALUES
--- Fatima Ali i klass 1
+-- Klass 1: Alla studenter (25-29) i båda kurserna (1, 2) + fristående kurs (13)
+-- Fatima Ali (25)
 (25, 1, '2024-01-12', NULL, 'enrolled'),
 (25, 2, '2024-03-16', NULL, 'enrolled'),
--- Noah Sundström i klass 1
-(26, 1, '2024-01-13', NULL, 'enrolled'),
+(25, 13, '2024-04-28', 'B', 'completed'),
+
+-- Noah Sundström (26)
+(26, 1, '2024-01-13', 'A', 'enrolled'),
 (26, 2, '2024-03-16', NULL, 'enrolled'),
--- Emelie Nilsson i klass 3
-(27, 5, '2024-02-05', NULL, 'enrolled'),
+(26, 13, '2024-04-28', 'A', 'completed'),
+
+-- Emelie Nilsson (27)
+(27, 5, '2024-02-05', 'C', 'enrolled'),
 (27, 6, '2024-04-03', NULL, 'enrolled'),
--- Musa Habib i klass 5
-(47, 7, '2024-08-26', NULL, 'enrolled'),
-(47, 8, '2024-10-26', NULL, 'enrolled'),
--- Jasmine Zhao i klass 6
-(48, 9, '2024-02-18', NULL, 'enrolled'),
-(48, 10, '2024-04-17', NULL, 'enrolled');
--- Lägg till fler inskrivningar efter behov
+(27, 13, '2024-04-28', 'B', 'completed'),
+
+-- Oscar Göransson (28)
+(28, 1, '2024-01-12', 'B', 'completed'),
+(28, 2, '2024-03-16', NULL, 'enrolled'),
+(28, 13, '2024-04-28', 'A', 'completed'),
+
+-- Maja Lundqvist (29)
+(29, 1, '2024-01-12', 'A', 'completed'),
+(29, 2, '2024-03-16', NULL, 'enrolled'),
+(29, 13, '2024-04-28', 'B', 'completed'),
+
+-- Klass 2: Studenterna (30-32) i båda kurserna (3, 4) + fristående kurs (15)
+-- Hanna Karlsson (30)
+(30, 3, '2024-08-18', NULL, 'enrolled'),
+(30, 4, '2024-10-19', NULL, 'enrolled'),
+(30, 15, '2024-08-25', NULL, 'enrolled'),
+
+-- Elias Jabbari (31)
+(31, 3, '2024-08-18', NULL, 'enrolled'),
+(31, 4, '2024-10-19', NULL, 'enrolled'),
+(31, 15, '2024-08-25', NULL, 'enrolled'),
+
+-- Alma Svensson (32)
+(32, 3, '2024-08-18', NULL, 'enrolled'),
+(32, 4, '2024-10-19', NULL, 'enrolled'),
+(32, 15, '2024-08-25', NULL, 'enrolled'),
+
+-- Klass 3: Studenterna (33-35) i båda kurserna (5, 6) + fristående kurs (14)
+-- Viktor Holm (33)
+(33, 5, '2024-01-28', 'B', 'completed'),
+(33, 6, '2024-04-03', NULL, 'enrolled'),
+(33, 14, '2024-05-28', 'A', 'completed'),
+
+-- Sara Olofsson (34)
+(34, 5, '2024-01-28', 'A', 'completed'),
+(34, 6, '2024-04-03', NULL, 'enrolled'),
+(34, 14, '2024-05-28', 'B', 'completed'),
+
+-- Alejandro Papadopoulos (35)
+(35, 5, '2024-01-28', 'C', 'completed'),
+(35, 6, '2024-04-03', NULL, 'enrolled'),
+(35, 14, '2024-05-28', 'C', 'completed'),
+
+-- Klass 4: Studenterna (36-38) i båda kurserna (7, 8)
+-- Linnea Berg (36)
+(36, 7, '2024-03-02', NULL, 'enrolled'),
+(36, 8, '2024-05-02', NULL, 'enrolled'),
+
+-- Felix Nyström (37)
+(37, 7, '2024-03-02', NULL, 'enrolled'),
+(37, 8, '2024-05-02', NULL, 'enrolled'),
+
+-- Elin Forsberg (38)
+(38, 7, '2024-03-02', NULL, 'enrolled'),
+(38, 8, '2024-05-02', NULL, 'enrolled'),
+
+-- Klass 5: Studenterna (39-41) i båda kurserna (9, 10) + fristående kurs (16)
+-- Adam Nordström (39)
+(39, 9, '2024-01-18', 'B', 'completed'),
+(39, 10, '2024-03-22', NULL, 'enrolled'),
+(39, 16, '2024-09-28', NULL, 'enrolled'),
+
+-- Wilma Hansson (40)
+(40, 9, '2024-01-18', 'A', 'completed'),
+(40, 10, '2024-03-22', NULL, 'enrolled'),
+(40, 16, '2024-09-28', NULL, 'enrolled'),
+
+-- Mohammed Said (41)
+(41, 9, '2024-01-18', 'C', 'completed'),
+(41, 10, '2024-03-22', NULL, 'enrolled'),
+(41, 16, '2024-09-28', NULL, 'enrolled'),
+
+-- Klass 6: Studenterna (42-44) i båda kurserna (11, 12)
+-- Asia Ahmeddin (42)
+(42, 11, '2024-02-22', NULL, 'enrolled'),
+(42, 12, '2024-04-17', NULL, 'enrolled'),
+
+-- Klass 10
+-- Kenneth Cornelius (43)
+(52, 23, '2024-09-06', NULL, 'enrolled'),
+(52, 24, '2024-10-07', NULL, 'enrolled');
