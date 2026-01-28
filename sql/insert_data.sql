@@ -2,7 +2,7 @@
 -- YRKESCO DATABASE
 -- =================
 
--- Anläggningar
+-- Anläggningar (Vilket inkluderar extra anläggningar)
 INSERT INTO facility (facility_code, facility_name, address, postal_code, phone) VALUES
 ('GBG01', 'YrkesCo Göteborg (Central)', 'Götaplatsen 5', '41256', '031-123456'),
 ('GBG02', 'YrkesCo Göteborg Avenyn', 'Avenyn 42', '41136', '031-234567'),
@@ -172,75 +172,114 @@ INSERT INTO education_leader (leader_id, employee_number, department) VALUES
 
 -- Klass
 INSERT INTO class (program_id, leader_id, facility_id, class_name, class_code, iteration, start_date, end_date, max_students, status) VALUES
--- Göteborg
+-- ========== Mikael Göransson (leader_id: 1) - MAX 3 klasser ==========
+-- Fullstack .NET vår 2024
 (1, 1, 1, 'Fullstack .NET vår 2024', 'FSD-GBG-2024-1', 1, '2024-01-15', '2024-06-15', 25, 'ongoing'),
+-- Fullstack .NET höst 2024
 (1, 1, 2, 'Fullstack .NET höst 2024', 'FSD-GBG-2024-2', 2, '2024-08-20', '2024-12-20', 25, 'planned'),
+-- Fullstack .NET vår 2025
+(1, 1, 1, 'Fullstack .NET vår 2025', 'FSD-GBG-2025-3', 3, '2025-01-15', '2025-06-15', 25, 'planned'),
+
+-- ========== Pierre Dubois (leader_id: 2) - MAX 3 klasser ==========
+-- Data Science vår 2024
 (2, 2, 1, 'Data Science vår 2024', 'DS-GBG-2024-1', 1, '2024-02-01', '2024-07-01', 20, 'ongoing'),
+-- Data Science höst 2024
+(2, 2, 4, 'Data Science höst 2024', 'DS-STO-2024-2', 2, '2024-09-01', '2024-12-31', 20, 'planned'),
+-- Data Science vår 2025
+(2, 2, 1, 'Data Science vår 2025', 'DS-GBG-2025-3', 3, '2025-02-01', '2025-07-01', 20, 'planned'),
+
+-- ========== Lisan Al-Gaib (leader_id: 3) - MAX 3 klasser ==========
+-- UX/UI Design vår 2024
 (3, 3, 2, 'UX/UI Design vår 2024', 'UX-GBG-2024-1', 1, '2024-03-01', '2024-07-30', 19, 'ongoing'),
+-- UX/UI Design höst 2024 - FLYTTA från Pierre
+(3, 3, 5, 'UX/UI Design höst 2024', 'UX-MAL-2024-2', 2, '2024-09-05', '2024-12-30', 18, 'planned'),
+-- UX/UI Design vår 2025
+(3, 3, 2, 'UX/UI Design vår 2025', 'UX-GBG-2025-3', 3, '2025-03-01', '2025-07-30', 19, 'planned'),
 
--- Stockholm
-(1, 4, 3, 'Fullstack .NET vår 2024', 'FSD-STO-2024-1', 1, '2024-01-20', '2024-06-20', 30, 'ongoing'),
+-- ========== Aaliyah Omar (leader_id: 4) - MAX 3 klasser ==========
+-- Cloud Engineer vår 2024
 (4, 4, 4, 'Cloud Engineer vår 2024', 'CL-STO-2024-1', 1, '2024-02-15', '2024-07-15', 22, 'ongoing'),
+-- Cloud Engineer höst 2024
+(4, 4, 6, 'Cloud Engineer höst 2024', 'CL-UPP-2024-2', 2, '2024-08-15', '2024-12-15', 24, 'planned'),
+-- Cloud Engineer vår 2025
+(4, 4, 4, 'Cloud Engineer vår 2025', 'CL-STO-2025-3', 3, '2025-02-15', '2025-07-15', 22, 'planned'),
+
+-- ========== Fiona McKenzie (leader_id: 5) - MAX 3 klasser ==========
+-- Cybersäkerhet vår 2024
 (5, 5, 3, 'Cybersäkerhet vår 2024', 'CY-STO-2024-1', 1, '2024-03-10', '2024-08-10', 20, 'ongoing'),
-(2, 5, 4, 'Data Science höst 2024', 'DS-STO-2024-2', 2, '2024-09-01', '2024-12-31', 20, 'planned'),
+-- Cybersäkerhet höst 2024
+(5, 5, 6, 'Cybersäkerhet höst 2024', 'CY-UPP-2024-2', 2, '2024-09-10', '2024-12-20', 20, 'planned'),
+-- Cybersäkerhet vår 2025
+(5, 5, 3, 'Cybersäkerhet vår 2025', 'CY-STO-2025-3', 3, '2025-03-10', '2025-08-10', 20, 'planned'),
 
--- Malmö
-(1, 3, 5, 'Fullstack .NET höst 2024', 'FSD-MAL-2024-1', 1, '2024-08-25', '2024-12-25', 28, 'planned'),
-(3, 2, 5, 'UX/UI Design höst 2024', 'UX-MAL-2024-1', 1, '2024-09-05', '2024-12-30', 18, 'planned'),
-
--- Uppsala
-(4, 1, 6, 'Cloud Engineer höst 2024', 'CL-UPP-2024-1', 1, '2024-08-15', '2024-12-15', 24, 'planned'),
-(5, 4, 6, 'Cybersäkerhet höst 2024', 'CY-UPP-2024-1', 1, '2024-09-10', '2024-12-20', 20, 'planned');
+-- ========== EXTRA KLASSER för täckning ==========
+-- Fullstack .NET Stockholm (behöver en egen ledare)
+(1, 1, 3, 'Fullstack .NET Stockholm vår 2024', 'FSD-STO-2024-1', 1, '2024-01-20', '2024-06-20', 30, 'ongoing'),
+-- Fullstack .NET Malmö (behöver en egen ledare)
+(1, 2, 5, 'Fullstack .NET Malmö höst 2024', 'FSD-MAL-2024-1', 1, '2024-08-25', '2024-12-25', 28, 'planned');
 
 -- Student
 INSERT INTO student (student_id, program_id, class_id, student_number, enrollment_date, status) VALUES
--- Klass 1
+-- Klass 1: Fullstack .NET GBG (1)
 (25, 1, 1, 'ST-2024-000', '2024-01-10', 'active'),
 (26, 1, 1, 'ST-2024-001', '2024-01-10', 'active'),
 (27, 1, 1, 'ST-2024-002', '2024-01-10', 'active'),
-(28, 1, 1, 'ST-2024-003', '2024-01-10', 'active'),
-(29, 1, 1, 'ST-2024-004', '2024-01-10', 'active'),
 
--- Klass 2
+-- Klass 2: Fullstack .NET GBG (2)
+(28, 1, 2, 'ST-2024-003', '2024-08-15', 'active'),
+(29, 1, 2, 'ST-2024-004', '2024-08-15', 'active'),
 (30, 1, 2, 'ST-2024-005', '2024-08-15', 'active'),
-(31, 1, 2, 'ST-2024-006', '2024-08-15', 'active'),
-(32, 1, 2, 'ST-2024-007', '2024-08-15', 'active'),
 
--- Klass 3
-(33, 2, 3, 'ST-2024-008', '2024-01-25', 'active'),
-(34, 2, 3, 'ST-2024-009', '2024-01-25', 'active'),
-(35, 2, 3, 'ST-2024-010', '2024-01-25', 'active'),
+-- Klass 3: Fullstack .NET GBG iteration 3 (tom för nu)
+-- (inga studenter än, klassen är planerad)
 
--- Klass 4
-(36, 3, 4, 'ST-2024-011', '2024-03-01', 'active'),
-(37, 3, 4, 'ST-2024-012', '2024-03-01', 'active'),
-(38, 3, 4, 'ST-2024-013', '2024-03-01', 'active');
+-- Klass 4: Data Science GBG iteration 1
+(31, 2, 4, 'ST-2024-006', '2024-01-25', 'active'),
+(32, 2, 4, 'ST-2024-007', '2024-01-25', 'active'),
+(33, 2, 4, 'ST-2024-008', '2024-01-25', 'active'),
 
--- Klass 5
-(39, 1, 5, 'ST-2024-014', '2024-01-15', 'active'),
-(40, 1, 5, 'ST-2024-015', '2024-01-15', 'active'),
-(41, 1, 5, 'ST-2024-016', '2024-01-15', 'active'),
+-- Klass 5: Data Science STO iteration 2
+(34, 2, 5, 'ST-2024-009', '2024-09-05', 'active'),
+(35, 2, 5, 'ST-2024-010', '2024-09-05', 'active'),
 
--- Klass 6
-(42, 4, 6, 'ST-2024-017', '2024-02-20', 'active'),
-(43, 4, 6, 'ST-2024-018', '2024-02-20', 'active'),
-(44, 4, 6, 'ST-2024-019', '2024-02-20', 'active'),
+-- Klass 6: Data Science GBG iteration 3 (tom för nu)
 
--- Klass 7
-(45, 5, 7, 'ST-2024-020', '2024-03-15', 'active'),
-(46, 5, 7, 'ST-2024-021', '2024-03-15', 'active'),
-(47, 5, 7, 'ST-2024-022', '2024-03-15', 'active'),
+-- Klass 7: UX/UI Design GBG (1)
+(36, 3, 7, 'ST-2024-011', '2024-03-01', 'active'),
+(37, 3, 7, 'ST-2024-012', '2024-03-01', 'active'),
+(38, 3, 7, 'ST-2024-013', '2024-03-01', 'active'),
 
--- Klass 8
-(48, 2, 8, 'ST-2024-023', '2024-09-05', 'active'),
-(49, 2, 8, 'ST-2024-024', '2024-09-05', 'active'),
+-- Klass 8: UX/UI Design MAL (2)
+(39, 3, 8, 'ST-2024-014', '2024-09-01', 'active'),
+(40, 3, 8, 'ST-2024-015', '2024-09-01', 'active'),
 
--- Klass 9
-(50, 1, 9, 'ST-2024-025', '2024-08-20', 'active'),
-(51, 1, 9, 'ST-2024-026', '2024-08-20', 'active'),
+-- Klass 9: UX/UI Design GBG iteration 3 (tom för nu)
 
--- Klass 10
-(52, 3, 10, 'ST-2024-027', '2024-08-25', 'active');
+-- Klass 10: Cloud Engineer STO (1)
+(41, 4, 10, 'ST-2024-016', '2024-02-20', 'active'),
+(42, 4, 10, 'ST-2024-017', '2024-02-20', 'active'),
+(43, 4, 10, 'ST-2024-018', '2024-02-20', 'active'),
+
+-- Klass 11: Cloud Engineer UPP (2)
+(44, 4, 11, 'ST-2024-019', '2024-08-20', 'active'),
+(45, 4, 11, 'ST-2024-020', '2024-08-20', 'active'),
+
+-- Klass 12: Cloud Engineer STO iteration 3 (tom för nu)
+
+-- Klass 13: Cybersäkerhet STO (1)
+(46, 5, 13, 'ST-2024-021', '2024-03-15', 'active'),
+(47, 5, 13, 'ST-2024-022', '2024-03-15', 'active'),
+(48, 5, 13, 'ST-2024-023', '2024-03-15', 'active'),
+
+-- Klass 14: Cybersäkerhet UPP (2)
+(49, 5, 14, 'ST-2024-024', '2024-09-10', 'active'),
+(50, 5, 14, 'ST-2024-025', '2024-09-10', 'active'),
+
+-- Klass 15: Cybersäkerhet STO iteration 3 (tom för nu)
+
+-- Klass 16: Fullstack .NET STO (1)
+(51, 1, 16, 'ST-2024-026', '2024-01-15', 'active'),
+(52, 1, 16, 'ST-2024-027', '2024-01-15', 'active');
 
 -- Utbildare
 INSERT INTO educator (educator_id, is_permanent, employee_number, employment_date, hourly_rate) VALUES
@@ -298,155 +337,68 @@ INSERT INTO program_course (program_id, course_id, is_mandatory, semester) VALUE
 
 -- Kurs Uppgift
 INSERT INTO course_assignment (course_id, educator_id, class_id, start_date, end_date) VALUES
--- Klass 1 (FSD-GBG-2024-1)
+-- Klass 1 (Fullstack .NET GBG iteration 1)
 (1, 6, 1, '2024-01-15', '2024-03-15'),
 (2, 13, 1, '2024-03-16', '2024-06-15'),
 
--- Klass 2 (FSD-GBG-2024-2)
-(1, 7, 2, '2024-08-20', '2024-10-20'),
-(3, 14, 2, '2024-10-21', '2024-12-20'),
+-- Klass 4 (Data Science GBG iteration 1)
+(4, 15, 4, '2024-02-01', '2024-04-01'),
+(5, 8, 4, '2024-04-02', '2024-07-01'),
 
--- Klass 3 (DS-GBG-2024-1)
-(4, 15, 3, '2024-02-01', '2024-04-01'),
-(5, 8, 3, '2024-04-02', '2024-07-01'),
+-- Klass 7 (UX/UI Design GBG iteration 1)
+(1, 9, 7, '2024-03-01', '2024-04-30'),
+(7, 10, 7, '2024-05-01', '2024-07-30'),
 
--- Klass 4 (UX-GBG-2024-1)
-(1, 9, 4, '2024-03-01', '2024-04-30'),
-(7, 10, 4, '2024-05-01', '2024-07-30'),
+-- Klass 10 (Cloud Engineer STO iteration 1)
+(6, 10, 10, '2024-02-15', '2024-04-15'),
+(2, 17, 10, '2024-04-16', '2024-07-15'),
 
--- Klass 5 (FSD-STO-2024-1)
-(1, 9, 5, '2024-08-25', '2024-10-25'),
-(2, 16, 5, '2024-10-26', '2024-12-25'),
+-- Klass 13 (Cybersäkerhet STO iteration 1)
+(2, 11, 13, '2024-03-10', '2024-05-10'),
+(9, 12, 13, '2024-05-11', '2024-08-10'),
 
--- Klass 6 (CL-STO-2024-1)
-(6, 10, 6, '2024-02-15', '2024-04-15'),
-(2, 17, 6, '2024-04-16', '2024-07-15'),
-
--- Klass 7 (CY-STO-2024-1)
-(2, 11, 7, '2024-03-10', '2024-05-10'),
-(9, 12, 7, '2024-05-11', '2024-08-10'),
-
--- Klass 8 (DS-STO-2024-2)
-(4, 15, 8, '2024-09-01', '2024-10-31'),
-(5, 8, 8, '2024-11-01', '2024-12-31'),
-
--- Klass 9 (FSD-MAL-2024-1)
-(1, 11, 9, '2024-08-25', '2024-10-25'),
-(3, 18, 9, '2024-10-26', '2024-12-25'),
-
--- Klass 10 (UX-MAL-2024-1)
-(1, 9, 10, '2024-09-05', '2024-10-05'),
-(7, 10, 10, '2024-10-06', '2024-12-30'),
-
--- Klass 11 (CL-UPP-2024-1)
-(6, 10, 11, '2024-08-15', '2024-10-15'),
-(2, 17, 11, '2024-10-16', '2024-12-15'),
-
--- Klass 12 (CY-UPP-2024-1)
-(2, 11, 12, '2024-09-10', '2024-11-10'),
-(9, 12, 12, '2024-11-11', '2024-12-20'),
+-- Klass 16 (Fullstack .NET STO iteration 1)
+(1, 9, 16, '2024-01-20', '2024-03-20'),
+(2, 16, 16, '2024-03-21', '2024-06-20'),
 
 -- Fristående kurser
-(8, 12, 1, '2024-05-01', '2024-05-31'),  -- Testautomatisering i klass 1
-(9, 14, 3, '2024-06-01', '2024-06-30'),  -- GDPR i klass 3
-(7, 15, 2, '2024-09-01', '2024-09-30'),  -- Projektledning i klass 2
-(10, 16, 5, '2024-10-01', '2024-10-15'); -- Presentationsteknik i klass 5
+(8, 12, 1, '2024-05-01', '2024-05-31'),  -- Testautomatisering
+(9, 14, 4, '2024-06-01', '2024-06-30'),  -- GDPR
+(7, 15, 2, '2024-09-01', '2024-09-30'),  -- Projektledning
+(10, 16, 10, '2024-10-01', '2024-10-15'); -- Presentationsteknik
 
 -- Studentinskrivning
 INSERT INTO student_enrollment (student_id, assignment_id, enrollment_date, grade, status) VALUES
--- Klass 1: Alla studenter (25-29) i båda kurserna (1, 2) + fristående kurs (13)
--- Fatima Ali (25)
+-- Student 25 (Fatima Ali) i klass 1
 (25, 1, '2024-01-12', NULL, 'enrolled'),
 (25, 2, '2024-03-16', NULL, 'enrolled'),
-(25, 13, '2024-04-28', 'B', 'completed'),
+(25, 11, '2024-04-28', 'B', 'completed'),
 
--- Noah Sundström (26)
+-- Student 26 (Noah Sundström) i klass 1
 (26, 1, '2024-01-13', 'A', 'enrolled'),
 (26, 2, '2024-03-16', NULL, 'enrolled'),
-(26, 13, '2024-04-28', 'A', 'completed'),
+(26, 11, '2024-04-28', 'A', 'completed'),
 
--- Emelie Nilsson (27)
-(27, 5, '2024-02-05', 'C', 'enrolled'),
-(27, 6, '2024-04-03', NULL, 'enrolled'),
-(27, 13, '2024-04-28', 'B', 'completed'),
+-- Student 31 (Viktor Holm) i klass 4
+(31, 3, '2024-01-28', 'B', 'completed'),
+(31, 4, '2024-04-03', NULL, 'enrolled'),
+(31, 12, '2024-05-28', 'A', 'completed'),
 
--- Oscar Göransson (28)
-(28, 1, '2024-01-12', 'B', 'completed'),
-(28, 2, '2024-03-16', NULL, 'enrolled'),
-(28, 13, '2024-04-28', 'A', 'completed'),
+-- Student 36 (Linnea Berg) i klass 7
+(36, 5, '2024-03-02', NULL, 'enrolled'),
+(36, 6, '2024-05-02', NULL, 'enrolled'),
 
--- Maja Lundqvist (29)
-(29, 1, '2024-01-12', 'A', 'completed'),
-(29, 2, '2024-03-16', NULL, 'enrolled'),
-(29, 13, '2024-04-28', 'B', 'completed'),
+-- Student 41 (Adam Nordström) i klass 10
+(41, 7, '2024-02-18', 'B', 'completed'),
+(41, 8, '2024-04-17', NULL, 'enrolled'),
+(41, 14, '2024-09-28', NULL, 'enrolled'),
 
--- Klass 2: Studenterna (30-32) i båda kurserna (3, 4) + fristående kurs (15)
--- Hanna Karlsson (30)
-(30, 3, '2024-08-18', NULL, 'enrolled'),
-(30, 4, '2024-10-19', NULL, 'enrolled'),
-(30, 15, '2024-08-25', NULL, 'enrolled'),
+-- Student 46 (Berhan Mustafa) i klass 13
+(46, 9, '2024-03-16', NULL, 'enrolled'),
+(46, 10, '2024-05-12', NULL, 'enrolled'),
 
--- Elias Jabbari (31)
-(31, 3, '2024-08-18', NULL, 'enrolled'),
-(31, 4, '2024-10-19', NULL, 'enrolled'),
-(31, 15, '2024-08-25', NULL, 'enrolled'),
+-- Student 51 (Erik Andersson) i klass 16
+(51, 13, '2024-01-18', NULL, 'enrolled'),
+(51, 14, '2024-03-22', NULL, 'enrolled');
 
--- Alma Svensson (32)
-(32, 3, '2024-08-18', NULL, 'enrolled'),
-(32, 4, '2024-10-19', NULL, 'enrolled'),
-(32, 15, '2024-08-25', NULL, 'enrolled'),
-
--- Klass 3: Studenterna (33-35) i båda kurserna (5, 6) + fristående kurs (14)
--- Viktor Holm (33)
-(33, 5, '2024-01-28', 'B', 'completed'),
-(33, 6, '2024-04-03', NULL, 'enrolled'),
-(33, 14, '2024-05-28', 'A', 'completed'),
-
--- Sara Olofsson (34)
-(34, 5, '2024-01-28', 'A', 'completed'),
-(34, 6, '2024-04-03', NULL, 'enrolled'),
-(34, 14, '2024-05-28', 'B', 'completed'),
-
--- Alejandro Papadopoulos (35)
-(35, 5, '2024-01-28', 'C', 'completed'),
-(35, 6, '2024-04-03', NULL, 'enrolled'),
-(35, 14, '2024-05-28', 'C', 'completed'),
-
--- Klass 4: Studenterna (36-38) i båda kurserna (7, 8)
--- Linnea Berg (36)
-(36, 7, '2024-03-02', NULL, 'enrolled'),
-(36, 8, '2024-05-02', NULL, 'enrolled'),
-
--- Felix Nyström (37)
-(37, 7, '2024-03-02', NULL, 'enrolled'),
-(37, 8, '2024-05-02', NULL, 'enrolled'),
-
--- Elin Forsberg (38)
-(38, 7, '2024-03-02', NULL, 'enrolled'),
-(38, 8, '2024-05-02', NULL, 'enrolled'),
-
--- Klass 5: Studenterna (39-41) i båda kurserna (9, 10) + fristående kurs (16)
--- Adam Nordström (39)
-(39, 9, '2024-01-18', 'B', 'completed'),
-(39, 10, '2024-03-22', NULL, 'enrolled'),
-(39, 16, '2024-09-28', NULL, 'enrolled'),
-
--- Wilma Hansson (40)
-(40, 9, '2024-01-18', 'A', 'completed'),
-(40, 10, '2024-03-22', NULL, 'enrolled'),
-(40, 16, '2024-09-28', NULL, 'enrolled'),
-
--- Mohammed Said (41)
-(41, 9, '2024-01-18', 'C', 'completed'),
-(41, 10, '2024-03-22', NULL, 'enrolled'),
-(41, 16, '2024-09-28', NULL, 'enrolled'),
-
--- Klass 6: Studenterna (42-44) i båda kurserna (11, 12)
--- Asia Ahmeddin (42)
-(42, 11, '2024-02-22', NULL, 'enrolled'),
-(42, 12, '2024-04-17', NULL, 'enrolled'),
-
--- Klass 10
--- Kenneth Cornelius (43)
-(52, 23, '2024-09-06', NULL, 'enrolled'),
-(52, 24, '2024-10-07', NULL, 'enrolled');
+-- Fler läggs till efter behov, datan uppdateras
