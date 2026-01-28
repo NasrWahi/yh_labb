@@ -49,11 +49,11 @@ ORDER BY ca.start_date;
 -- Studenter: Klass - Program och kurser
 SELECT
     s.student_number,
-    CONCAT(per.first_name, ' ', per.last_name) as student_namn
+    CONCAT(per.first_name, ' ', per.last_name) as student_namn,
     p.program_name,
     c.class_name,
     COUNT(se.enrollment_id) as antal_kurser,
-    STRING_AGG(co.course_name, ', ') as kurser
+    STRING_AGG(DISTINCT co.course_name, ', ' ORDER BY co.course_name) as kurser
 FROM student s
 JOIN person per ON s.student_id = per.person_id
 JOIN program p ON s.program_id = p.program_id
@@ -76,7 +76,7 @@ SELECT
     END as anställningstyp,
     e.hourly_rate as timlön,
     COUNT(DISTINCT ca.assignment_id) as antal_kursuppdrag,
-    STRING_AGG(DISTINCT co.course_name, ', ') as kurser_undervisar
+    STRING_AGG(DISTINCT co.course_name, ', ' ORDER BY co.course_name) as kurser_undervisar
 FROM educator e
 JOIN person per ON e.educator_id = per.person_id
 LEFT JOIN course_assignment ca ON e.educator_id = ca.educator_id
@@ -159,7 +159,7 @@ SELECT
     el.employee_number,
     el.department,
     COUNT(cl.class_id) as antal_klasser,
-    STRING_AGG(CONCAT(cl.class_name, ' (', cl.status, ')'), ', ') as ledda_klasser,
+    STRING_AGG(CONCAT(cl.class_name, ' (', cl.status, ')'), ', ' ORDER BY cl.class_name) as ledda_klasser,
     CASE 
         WHEN COUNT(cl.class_id) > 3 THEN 'ÖVER MAXGRÄNS!'
         ELSE 'OK'
@@ -212,7 +212,7 @@ SELECT
     f.city,
     f.address,
     COUNT(DISTINCT cl.class_id) as antal_klasser,
-    STRING_AGG(DISTINCT p.program_name, ', ') as program,
+    STRING_AGG(DISTINCT p.program_name, ', ' ORDER BY p.program_name) as program,
     COUNT(DISTINCT s.student_id) as totala_studenter
 FROM facility f
 LEFT JOIN class cl ON f.facility_id = cl.facility_id
@@ -253,7 +253,7 @@ SELECT
     COUNT(DISTINCT f.facility_id) as antal_anläggningar,
     COUNT(DISTINCT cl.class_id) as antal_klasser,
     COUNT(DISTINCT s.student_id) as antal_studenter,
-    STRING_AGG(DISTINCT p.program_name, ', ') as erbjudna_program
+    STRING_AGG(DISTINCT p.program_name, ', ' ORDER BY p.program_name) as erbjudna_program
 FROM facility f
 LEFT JOIN class cl ON f.facility_id = cl.facility_id
 LEFT JOIN program p ON cl.program_id = p.program_id
