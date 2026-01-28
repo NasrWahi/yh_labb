@@ -1,5 +1,5 @@
 -- YrkesCo (Anläggningar)
-CREATE TABLE facility_id (
+CREATE TABLE facility (
     facility_id SERIAL PRIMARY KEY,
     facility_code VARCHAR(15) UNIQUE NOT NULL,
     facility_name VARCHAR(200) NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE consultant_company (
     org_number VARCHAR(12) UNIQUE NOT NULL,
     has_f_skatt BOOLEAN DEFAULT TRUE,
     address VARCHAR(300),
-    email VARCHAR(300)
+    email VARCHAR(300),
     phone VARCHAR(20)
 );
 
@@ -29,14 +29,6 @@ CREATE TABLE person (
     birth_date DATE
 );
 
--- Person Detaljer
-CREATE TABLE person_details (
-    person_detail_id SERIAL PRIMARY KEY,
-    person_id INTEGER UNIQUE NOT NULL REFERENCES person(person_id) ON DELETE CASCADE, -- DELETE CASCADE to remove details when a person is for example deleted, which was brought up to my attention by a peer/classmate
-    personal_number VARCHAR(15) UNIQUE NOT NULL,
-    email VARCHAR(300) UNIQUE NOT NULL
-);
-
 -- Program
 CREATE TABLE program (
     program_id SERIAL PRIMARY KEY,
@@ -44,7 +36,7 @@ CREATE TABLE program (
     program_code VARCHAR(10) NOT NULL UNIQUE,
     total_credits INTEGER NOT NULL,
     duration_weeks INTEGER,
-    description TEXT
+    description TEXT,
     is_active BOOLEAN DEFAULT TRUE
 );
 
@@ -58,6 +50,14 @@ CREATE TABLE course (
     is_standalone BOOLEAN DEFAULT FALSE,
     difficulty_level VARCHAR(20) DEFAULT 'basic',
     is_active BOOLEAN DEFAULT TRUE
+);
+
+-- Person Detaljer
+CREATE TABLE person_details (
+    person_detail_id SERIAL PRIMARY KEY,
+    person_id INTEGER UNIQUE NOT NULL REFERENCES person(person_id) ON DELETE CASCADE, -- DELETE CASCADE to remove details when a person is for example deleted, which was brought up to my attention by a peer/classmate
+    personal_number VARCHAR(15) UNIQUE NOT NULL,
+    email VARCHAR(300) UNIQUE NOT NULL
 );
 
 -- Utbildningsledare
@@ -80,7 +80,16 @@ CREATE TABLE class (
     end_date DATE,
     max_students INTEGER DEFAULT 30,
     status VARCHAR(20) DEFAULT 'planned',
-    UNIQUE (program_id, iteration)
+    UNIQUE (program_id, iteration, class_code)
+);
+
+-- Utbildare - Lärare - Pedagog
+CREATE TABLE educator (
+    educator_id INTEGER PRIMARY KEY REFERENCES person(person_id) ON DELETE CASCADE,
+    is_permanent BOOLEAN DEFAULT FALSE,
+    employee_number VARCHAR(25) UNIQUE NOT NULL,
+    employment_date DATE,
+    hourly_rate NUMERIC(10,2)
 );
 
 -- Student
@@ -91,15 +100,6 @@ CREATE TABLE student (
     student_number VARCHAR(30) UNIQUE NOT NULL,
     enrollment_date DATE DEFAULT CURRENT_DATE,
     status VARCHAR(20) DEFAULT 'active'
-);
-
--- Utbildare - Lärare - Pedagog
-CREATE TABLE educator (
-    educator_id INTEGER PRIMARY KEY REFERENCES person(person_id) ON DELETE CASCADE,
-    is_permanent BOOLEAN DEFAULT FALSE,
-    employee_number VARCHAR(25) UNIQUE NOT NULL,
-    employment_date DATE,
-    hourly_rate NUMERIC(10,2)
 );
 
 -- Konsult
@@ -134,8 +134,7 @@ CREATE TABLE course_assignment (
 -- Studentinskrivning
 CREATE TABLE student_enrollment (
     enrollment_id SERIAL PRIMARY KEY,
-    student_id INTEGER NOT
-     NULL REFERENCES student(student_id) ON DELETE CASCADE,
+    student_id INTEGER NOT NULL REFERENCES student(student_id) ON DELETE CASCADE,
     assignment_id INTEGER NOT NULL REFERENCES course_assignment(assignment_id) ON DELETE CASCADE,
     enrollment_date DATE DEFAULT CURRENT_DATE,
     grade VARCHAR(2),
