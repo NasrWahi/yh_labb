@@ -1,24 +1,16 @@
+## Docker PostgreSQL hade en automatisk startmotor som ställde till det i terminalen, så vi behövde rensa databasen innan man kunde köra insert-satser, därav har vi denna truncate-sats i början av denna fil
+
+TRUNCATE student_enrollment, course_assignment, program_course, student, consultant,
+         educator, class, education_leader, person_details, course, program, 
+         person, consultant_company, facility RESTART IDENTITY CASCADE;
+
 -- =================
 -- YRKESCO DATABASE
 -- =================
 
--- Anläggningar (Vilket inkluderar extra anläggningar)
-INSERT INTO facility (facility_code, facility_name, address, postal_code, phone) VALUES
-('GBG01', 'YrkesCo Göteborg (Central)', 'Götaplatsen 5', '41256', '031-123456'),
-('GBG02', 'YrkesCo Göteborg Avenyn', 'Avenyn 42', '41136', '031-234567'),
-('STO01', 'YrkesCo Stockholm Kungsgatan', 'Kungsgatan 64', '11122', '08-987654'),
-('STO02', 'YrkesCo Stockholm Sveavägen', 'Sveavägen 73', '11350', '08-876543'),
-('MAL01', 'YrkesCo Malmö (Central)', 'Stortorget 1', '21141', '040-222444'),
-('UPP01', 'YrkesCo Uppsala Stad', 'Stora Torget 10', '75320', '018-999888');
+-- Tabellerna var inte i ordning, använde LLM för att snabbt fixa det
 
--- Konsultföretag
-INSERT INTO consultant_company (company_name, org_number, has_f_skatt, address, email, phone) VALUES
-('IT Konsult AB', '556677-8899', TRUE, 'Kungsgatan 10, Stockholm', 'info@itkonsult.se', '08-123456'),
-('Data Education Sverige AB', '556688-9900', TRUE, 'Avenyn 25, Göteborg', 'kontakt@dataeducation.se', '031-234567'),
-('North Tech Valley AB', '556699-0011', TRUE, 'Stortorget 5, Malmö', 'info@northtechvalley.se', '040-345678'),
-('Nortech AB', '556600-1122', TRUE, 'Drottninggatan 8, Uppsala', 'kontakt@nortech.se', '018-456789');
-
--- Personer
+-- NIVÅ 1: Grundtabeller utan foreign key-beroenden
 INSERT INTO person (first_name, last_name, person_type, birth_date) VALUES
 -- Utbildningsledare
 ('Mikael', 'Göransson', 'education_leader', '1989-06-06'),
@@ -82,6 +74,60 @@ INSERT INTO person (first_name, last_name, person_type, birth_date) VALUES
 ('Arda', 'Yilmaz', 'student', '1995-09-05'),
 ('Kenneth', 'Cornelius', 'student', '1986-10-10');
 
+-- Anläggningar (Vilket inkluderar extra anläggningar)
+INSERT INTO facility (facility_code, facility_name, city, address, postal_code, phone) VALUES
+('GBG01', 'YrkesCo Göteborg (Central)', 'Göteborg', 'Götaplatsen 5', '41256', '031-123456'),
+('GBG02', 'YrkesCo Göteborg Avenyn', 'Göteborg', 'Avenyn 42', '41136', '031-234567'),
+('STO01', 'YrkesCo Stockholm Kungsgatan','Stockholm', 'Kungsgatan 64', '11122', '08-987654'),
+('STO02', 'YrkesCo Stockholm Sveavägen', 'Stockholm', 'Sveavägen 73', '11350', '08-876543'),
+('MAL01', 'YrkesCo Malmö (Central)', 'Malmö', 'Stortorget 1', '21141', '040-222444'),
+('UPP01', 'YrkesCo Uppsala Stad', 'Uppsala', 'Stora Torget 10', '75320', '018-999888');
+
+-- Konsultföretag
+INSERT INTO consultant_company (company_name, org_number, has_f_skatt, address, email, phone) VALUES
+('IT Konsult AB', '556677-8899', TRUE, 'Kungsgatan 10, Stockholm', 'info@itkonsult.se', '08-123456'),
+('Data Education Sverige AB', '556688-9900', TRUE, 'Avenyn 25, Göteborg', 'kontakt@dataeducation.se', '031-234567'),
+('North Tech Valley AB', '556699-0011', TRUE, 'Stortorget 5, Malmö', 'info@northtechvalley.se', '040-345678'),
+('Nortech AB', '556600-1122', TRUE, 'Drottninggatan 8, Uppsala', 'kontakt@nortech.se', '018-456789');
+
+-- NIVÅ 2: Tabeller som refererar till NIVÅ 1
+
+-- Utbildningsledare
+INSERT INTO education_leader (leader_id, employee_number, department) VALUES
+(1, 'EL-2023-001', 'IT Utbildningar'),
+(2, 'EL-2023-002', 'Data Science'),
+(3, 'EL-2023-003', 'Design och UX'),
+(4, 'EL-2024-001', 'Cloud Engineer'),
+(5, 'EL-2024-002', 'Cybersäkerhet');
+
+-- Utbildare
+INSERT INTO educator (educator_id, is_permanent, employee_number, employment_date, hourly_rate) VALUES
+-- Fasta anställda
+(6, TRUE, 'ED-PERM-001', '2010-05-15', 550.00),
+(7, TRUE, 'ED-PERM-002', '2005-09-01', 600.00),
+(8, TRUE, 'ED-PERM-003', '2012-11-20', 580.00),
+(9, TRUE, 'ED-PERM-004', '2015-03-10', 570.00),
+(10, TRUE, 'ED-PERM-005', '2018-07-25', 560.00),
+(11, TRUE, 'ED-PERM-006', '2019-10-30', 540.00),
+(12, TRUE, 'ED-PERM-007', '2020-01-15', 530.00),
+(13, TRUE, 'ED-PERM-008', '2021-06-05', 520.00),
+
+-- Ej fasta (konsulter/visstidsanställda)
+(14, FALSE, 'ED-CONS-001', NULL, 650.00),
+(15, FALSE, 'ED-CONS-002', NULL, 620.00),
+(16, FALSE, 'ED-CONS-003', NULL, 640.00),
+(17, FALSE, 'ED-CONS-004', NULL, 630.00),
+(18, FALSE, 'ED-CONS-005', NULL, 660.00);
+
+-- Konsulter
+INSERT INTO consultant (consultant_id, company_id, hourly_rate, contract_start_date, contract_end_date) VALUES
+(19, 1, 700.00, '2024-01-01', '2024-12-31'),
+(20, 2, 720.00, '2024-02-01', '2024-11-30'),
+(21, 3, 680.00, '2024-03-01', '2024-10-31'),
+(22, 4, 710.00, '2024-04-01', '2024-09-30'),
+(23, 1, 690.00, '2024-05-01', '2024-08-31'),
+(24, 2, 730.00, '2024-06-01', '2024-07-31');
+
 -- Person detaljer
 INSERT INTO person_details (person_id, personal_number, email) VALUES
 (1, '890606-1234', 'mikael.goransson@yrkesco.se'),
@@ -138,6 +184,8 @@ INSERT INTO person_details (person_id, personal_number, email) VALUES
 (51, '950905-2345', 'arda.yilmaz@yrkesco.se'),
 (52, '861010-3456', 'kenneth.cornelius@yrkesco.se');
 
+-- NIVÅ 3: Program och Kurser (refererar inte till andra tabeller i vår lista)
+
 -- Program
 INSERT INTO program (program_name, program_code, total_credits, duration_weeks, description, is_active) VALUES
 ('Fullstack Utvecklare .NET', 'YHP-FSD01', 400, 40, 'En omfattande utbildning i .NET-utveckling.', TRUE),
@@ -162,13 +210,7 @@ INSERT INTO course (course_name, course_code, credits, description, is_standalon
 ('GDPR och Dataskydd', 'YHC-GD01', 20, 'Dataskyddslagar och GDPR inom IT-branschen.', TRUE, 'beginner', TRUE),
 ('Presentationsteknik för IT', 'YHC-PT01', 10, 'Effektiva presentationsfärdigheter för IT-professionella.', TRUE, 'beginner', TRUE);
 
--- Utbildningsledare
-INSERT INTO education_leader (leader_id, employee_number, department) VALUES
-(1, 'EL-2023-001', 'IT Utbildningar'),
-(2, 'EL-2023-002', 'Data Science'),
-(3, 'EL-2023-003', 'Design och UX'),
-(4, 'EL-2024-001', 'Cloud Engineer'),
-(5, 'EL-2024-002', 'Cybersäkerhet');
+-- NIVÅ 4: Klasser (behöver facility_id, program_id, leader_id)
 
 -- Klass
 INSERT INTO class (program_id, leader_id, facility_id, class_name, class_code, iteration, start_date, end_date, max_students, status) VALUES
@@ -217,6 +259,8 @@ INSERT INTO class (program_id, leader_id, facility_id, class_name, class_code, i
 (1, 1, 3, 'Fullstack .NET Stockholm vår 2024', 'FSD-STO-2024-1', 1, '2024-01-20', '2024-06-20', 30, 'ongoing'),
 -- Fullstack .NET Malmö (behöver en egen ledare)
 (1, 2, 5, 'Fullstack .NET Malmö höst 2024', 'FSD-MAL-2024-1', 1, '2024-08-25', '2024-12-25', 28, 'planned');
+
+-- NIVÅ 5: Student (behöver student_id, program_id, class_id)
 
 -- Student
 INSERT INTO student (student_id, program_id, class_id, student_number, enrollment_date, status) VALUES
@@ -281,33 +325,7 @@ INSERT INTO student (student_id, program_id, class_id, student_number, enrollmen
 (51, 1, 16, 'ST-2024-026', '2024-01-15', 'active'),
 (52, 1, 16, 'ST-2024-027', '2024-01-15', 'active');
 
--- Utbildare
-INSERT INTO educator (educator_id, is_permanent, employee_number, employment_date, hourly_rate) VALUES
--- Fasta anställda
-(6, TRUE, 'ED-PERM-001', '2010-05-15', 550.00),
-(7, TRUE, 'ED-PERM-002', '2005-09-01', 600.00),
-(8, TRUE, 'ED-PERM-003', '2012-11-20', 580.00),
-(9, TRUE, 'ED-PERM-004', '2015-03-10', 570.00),
-(10, TRUE, 'ED-PERM-005', '2018-07-25', 560.00),
-(11, TRUE, 'ED-PERM-006', '2019-10-30', 540.00),
-(12, TRUE, 'ED-PERM-007', '2020-01-15', 530.00),
-(13, TRUE, 'ED-PERM-008', '2021-06-05', 520.00),
-
--- Ej fasta (konsulter/visstidsanställda)
-(14, FALSE, 'ED-CONS-001', NULL, 650.00),
-(15, FALSE, 'ED-CONS-002', NULL, 620.00),
-(16, FALSE, 'ED-CONS-003', NULL, 640.00),
-(17, FALSE, 'ED-CONS-004', NULL, 630.00),
-(18, FALSE, 'ED-CONS-005', NULL, 660.00);
-
--- Konsulter
-INSERT INTO consultant (consultant_id, company_id, hourly_rate, contract_start_date, contract_end_date) VALUES
-(19, 1, 700.00, '2024-01-01', '2024-12-31'),
-(20, 2, 720.00, '2024-02-01', '2024-11-30'),
-(21, 3, 680.00, '2024-03-01', '2024-10-31'),
-(22, 4, 710.00, '2024-04-01', '2024-09-30'),
-(23, 1, 690.00, '2024-05-01', '2024-08-31'),
-(24, 2, 730.00, '2024-06-01', '2024-07-31');
+-- NIVÅ 6: Program Kurs (behöver program_id, course_id)
 
 -- Program Kurs
 INSERT INTO program_course (program_id, course_id, is_mandatory, semester) VALUES
@@ -334,6 +352,8 @@ INSERT INTO program_course (program_id, course_id, is_mandatory, semester) VALUE
 (5, 2, TRUE, 1),
 (5, 9, TRUE, 2),
 (5, 8, FALSE, 3);
+
+-- NIVÅ 7: Kurs Uppgift (behöver course_id, educator_id, class_id)
 
 -- Kurs Uppgift
 INSERT INTO course_assignment (course_id, educator_id, class_id, start_date, end_date) VALUES
@@ -366,6 +386,8 @@ INSERT INTO course_assignment (course_id, educator_id, class_id, start_date, end
 (9, 14, 4, '2024-06-01', '2024-06-30'),  -- GDPR
 (7, 15, 2, '2024-09-01', '2024-09-30'),  -- Projektledning
 (10, 16, 10, '2024-10-01', '2024-10-15'); -- Presentationsteknik
+
+-- NIVÅ 8: Studentinskrivning (behöver student_id, assignment_id)
 
 -- Studentinskrivning
 INSERT INTO student_enrollment (student_id, assignment_id, enrollment_date, grade, status) VALUES

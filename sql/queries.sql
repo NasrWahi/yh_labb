@@ -8,7 +8,7 @@ SELECT
     CONCAT(p.first_name, ' ', p.last_name) as ledare_namn,
     COUNT(cl.class_id) as antal_klasser,
     CASE 
-        WHEN COUNT(cl.class_id) > 3 THEN 'FEL - for manga klasser'
+        WHEN COUNT(cl.class_id) > 3 THEN 'FEL - för många klasser'
         WHEN COUNT(cl.class_id) = 0 THEN 'Inga klasser'
         ELSE 'OK'
     END as resultat
@@ -39,13 +39,13 @@ SELECT
     COUNT(*) as antal_anlaggningar,
     CASE 
         WHEN COUNT(*) >= 2 THEN 'OK'
-        ELSE 'For fa'
+        ELSE 'För få'
     END as resultat
 FROM facility;
 
 -- Test 4: Känslig data separerad
 SELECT 
-    'Test: Kanslig data separerad' as test_namn,
+    'Test: Känslig data separerad' as test_namn,
     CASE 
         WHEN COUNT(DISTINCT p.person_id) = COUNT(DISTINCT pd.person_id) 
             THEN 'OK'
@@ -66,7 +66,7 @@ SELECT
 
 -- Test 6: Fristående kurser
 SELECT 
-    'Test: Fristaende kurser' as test_namn,
+    'Test: Fristående kurser' as test_namn,
     CASE 
         WHEN COUNT(*) > 0 THEN 'OK'
         ELSE 'FEL'
@@ -112,7 +112,7 @@ SELECT
     ca.end_date as kurs_slut,
     CONCAT(per.first_name, ' ', per.last_name) as larare_namn,
     CASE 
-        WHEN e.is_permanent THEN 'Fast anstalld'
+        WHEN e.is_permanent THEN 'Fast anställd'
         ELSE 'Konsult/visstid'
     END as anstallningstyp
 FROM course_assignment ca
@@ -143,7 +143,7 @@ ORDER BY per.last_name;
 SELECT 
     CONCAT(per.first_name, ' ', per.last_name) as larare_namn,
     CASE 
-        WHEN e.is_permanent THEN 'Fast anstalld'
+        WHEN e.is_permanent THEN 'Fast anställd'
         ELSE 'Konsult/visstid'
     END as anstallningstyp,
     e.hourly_rate as timlon,
@@ -217,12 +217,12 @@ ORDER BY p.program_name, f.city;
 
 -- Query 9: Utbildningsledare och deras klasser
 SELECT 
-    CONCAT(per.first_name, ' ', p.last_name) as ledare_namn,
+    CONCAT(p.first_name, ' ', p.last_name) as ledare_namn,
     COUNT(cl.class_id) as antal_klasser
 FROM education_leader el
 JOIN person p ON el.leader_id = p.person_id
 LEFT JOIN class cl ON el.leader_id = cl.leader_id
-GROUP BY el.leader_id, per.first_name, p.last_name
+GROUP BY el.leader_id, p.first_name, p.last_name
 ORDER BY antal_klasser DESC;
 
 -- Query 10: Studentbetyg
@@ -256,7 +256,7 @@ ORDER BY f.city;
 
 -- Query 12: Personalstatistik
 SELECT 
-    'Fast anstallda' as kategori,
+    'Fast anställda' as kategori,
     COUNT(*) as antal
 FROM educator e
 WHERE e.is_permanent = TRUE
